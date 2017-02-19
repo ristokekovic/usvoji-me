@@ -1,0 +1,570 @@
+<head>
+  <title>myapp</title>
+</head>
+
+<body>
+  {{> nav}}
+  {{#if currentUser}}
+    <div class="fixed-action-btn">
+    <a class="btn-floating btn-large red">
+      <i class="large material-icons">menu</i>
+    </a>
+    <ul>
+      <li><a href="/add" class="btn-floating red"><i class="material-icons">add</i></a></li>
+      <li><a href="/search" class="btn-floating yellow darken-1"><i class="material-icons">search</i></a></li>
+      <li><a href="/changePassword" class="btn-floating green"><i class="material-icons">mode_edit</i></a></li>
+    </ul>
+  </div>
+  {{/if}}
+</body>
+
+<template name="nav">
+  <nav style="background-color: #3f51b5; paddingLeft: 20px">
+    <div class="nav-wrapper">
+      <a href="/" class="brand-logo">UsvojiMe!</a>
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+      {{#if currentUser}}
+        <li><a href="/myDogs">Moji psi</a></li>
+        <li><a href="/categories">Kategorije</a></li>
+        <li><a href="/search">Pretraga</a></li>
+        <li><a href="/changePassword">Promena šifre</a></li>
+        <li><a id="logout">Odjava</a></li>
+      {{else}}
+        <li><a href="/categories">Kategorije</a></li>
+        <li><a href="/search">Pretraga</a></li>
+        <li><a href="/login">Prijava</a></li>
+        <li><a href="/register">Registracija</a></li>
+      {{/if}}
+      </ul>
+    </div>
+  </nav>
+</template>
+
+<template name="carousel">
+  <div class="carousel">
+    <a class="carousel-item" href="#one!"><img src="https://static.pexels.com/photos/7720/night-animal-dog-pet.jpg"></a>
+    <a class="carousel-item" href="#two!"><img src="https://static.pexels.com/photos/58997/pexels-photo-58997.jpeg"></a>
+    <a class="carousel-item" href="#three!"><img src="https://static.pexels.com/photos/200008/pexels-photo-200008.jpeg"></a>
+    <a class="carousel-item" href="#four!"><img src="https://static.pexels.com/photos/33053/dog-young-dog-small-dog-maltese.jpg"></a>
+    <a class="carousel-item" href="#five!"><img src="https://static.pexels.com/photos/128817/pexels-photo-128817.jpeg"></a>
+  </div>
+</template>
+
+<template name="login">
+<div class="row">
+<h4 class="text-center center-align">Prijava</h4>
+<form class="col offset-s4 s4">
+      <div class="row">
+        <div class="input-field col s12">
+          <input id="email" type="email" class="validate">
+          <label for="email">E-mail</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s12">
+          <input id="password" type="password" class="validate">
+          <label for="password">Šifra</label>
+        </div>
+      </div>
+      <div class="row center-align">
+            <button class="waves-effect waves-light btn btn-block submit">Prijava <i class="material-icons right">send</i></button>
+      </div>
+</form>
+</div>
+</template>
+
+<template name="register">
+    <div class="row">
+     <h4 class="text-center center-align">Registracija</h4>
+    <form class="col offset-s4 s4">
+      <div class="row">
+        <div class="input-field col s12">
+          <input id="username" type="text" class="validate">
+          <label for="username">Korisničko ime</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s12">
+          <input id="email" type="email" class="validate">
+          <label for="email">E-mail</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s12">
+          <input id="password" type="password" class="validate">
+          <label for="password">Šifra</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s12">
+          <input id="confirmPassword" type="password" class="validate">
+          <label for="confirmPassword">Potvrda šifre</label>
+        </div>
+      </div>
+      <div class="row center-align">
+            <button class="waves-effect waves-light btn btn-block submit">Registracija <i class="material-icons right">send</i></button>
+      </div>
+    </form>
+  </div>
+</template>
+
+<template name="changePassword">
+<div class="row">
+<h4 class="text-center center-align">Promena šifre</h4>
+<form class="col offset-s4 s4">
+      <div class="row">
+        <div class="input-field col s12">
+          <input id="oldPassword" type="password" class="validate">
+          <label for="oldPassword">Stara šifra</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s12">
+          <input id="newPassword" type="password" class="validate">
+          <label for="newPassword">Nova šifra</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s12">
+          <input id="confirmPassword" type="password" class="validate">
+          <label for="confirmPassword">Potvrda šifre</label>
+        </div>
+      </div>
+      <div class="row center-align">
+            <button class="waves-effect waves-light btn btn-block submit">Izmeni <i class="material-icons right">send</i></button>
+      </div>
+</form>
+</div>
+</template>
+
+<template name="home">
+    <h2 class="text-center center-align">Dobrodošli</h2>
+    {{> carousel}}
+    {{#if currentUser}}
+    <h4 class="text-center center-align">Uradite jedno dobro delo danas! Registrujte novog psa <a href="/add" class="btn-floating red"><i class="material-icons">add</i></a> u našu aplikaciju, ili potražite <a href="/search" class="btn-floating yellow darken-1"><i class="material-icons">search</i></a> nekog psa koji baš vama odgovara i pružite mu dom!</h4>
+    {{else}}
+    <h4 class="text-center center-align">UsvojiMe! je aplikacija namenjena psima lutalicama i psima koji se nalaze u nekoj ustanovi i potreban im je siguran dom. Pridružite nam se tako što ćete se registrovati ili prijaviti i tako postati član naše zajednice koja ima za cilj da udomi što više napuštenih pasa i skloni ih sa ulice...</h4>
+    {{/if}}
+</template>
+
+<template name="search">
+
+  <h4 class="text-center center-align">Pretraga</h4>
+
+  <div class="row">
+        <div class="input-field col s1">
+          <a id="dropdown-selector1" class='right-align dropdown-button btn' href='#' data-activates='dropdown1'>FILTER</a>
+        </div>
+  </div>
+
+  <!-- Dropdown Structure -->
+  <ul id='dropdown1' class='dropdown-content'>
+    {{#each races}}
+    <li><a href="search/{{name}}">{{name}}</a></li>
+    <li class="divider"></li>
+    {{/each}}
+  </ul>
+
+  <table class="striped centered responsive-table">
+        <thead>
+          <tr>
+              <th data-field="image"></th>
+              <th data-field="name">Ime</th>
+              <th data-field="gender">Pol</th>
+              <th data-field="race">Rasa</th>
+              <th data-field="place">Prebivalište</th>
+              <th data-field="location">Lokacija</th>
+              <th data-field="hospitalized">Udomljen</th>
+              <th data-field="edit">Izmena</th>
+              <th data-field="delete">Brisanje</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          {{#each dogs}}
+          <tr>
+              {{#if photo}}
+              <td><a href="/view/{{_id}}"><img class="responsive-img circle thumbnail" src={{photo}}></a></td>
+              {{else}}
+              <td><a href="/view/{{_id}}"><img class="responsive-img circle thumbnail" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPAAAADwBAMAAADMe/ShAAAAJFBMVEXt7e2ysrL////29vby8vL8/Pza2trn5+fQ0NC/v7+3t7fHx8eWamC7AAAHq0lEQVR42r2du28TQRDGhzj4QqhWIGOfG+ts95YJveWE3jLQOyDxSmOnQBCaOIiQQIORSHhUloCAaGKQeP11RFbkyeV8uZ359vxJIIvmx8x+M7t3t3dLgVK3bt26ce3or0ApDfjW1ZUGTTS/crUdJAoH31hiKMOXE9gw+EaDYrRyLWC5Bl8NYSNhM1oARqJldD0FcHWJLLQsBOPhctBuwUtkrWsOwdUaCbTsDFxtkEiZthtwmaSatyATwIXIBHAhMgFciEwAFyKTwM8yZRBwjQAty8HMhXRdC75JoOoqMBsrFYMRYCzIYJTKAPMwy8EVcqK6FFwlVirJJiDRULIJSDSUbErJ0ayMBNwih2rag8vkUvMxYMBZiL8oPWex2pbghmvweSswB5xqSREQMFRSBMzCUMgEBAyFTMAIQyETEDBkbAIChmqZgKYFhUyCLo0pAgamJWSSImDBA01SBFgLqigCaglqIgRYC6ooAmoJshcB1oLsRYC1IHsRkGmoe5Ew03iuo+ASCQTnmoAihnJNQBFDuSYg01CuCfA0lGsCPA3lmoDuAeWaRJnGNRcB02yUYTBQTMjcSMBiC5obCWhbUEERVEze/Z2d7a6qoAgopuzu0Byp2NEMMqmH2Fszx8p3FYNM2iF+NDITHSgGmZRDvGZOyO/IB5lUQ+y9NCHlZYPM4JaOyzoUDzIphtgbmdMqigaZwXIuEPI8g8sw96UkZAaXdNzCYPJzx2wK5uQJuKbzVbE/+bk3zAnnZBJ666FhFVa5nkamI5uTSdY+npqTesD/h745EIJF3soOY8D+Q+N3Re4ikbdWTUivQv+HfZG7SNK3vGEUzD8Lot5FElNfNGH9CYHNoaR3kaRvLUbAoZ85ibtIYure2RGbrqBpEpta7C2zFwbbV1R7DC6pvMVgrqyCwNYkMPUTkwA2h/a2JntTe4PT4C/DU90zZ9+tybpTe31zWrlBeL6w7l6ZMVi+qoyC8yNeb9qCq1bYXWPOAn85/lW0rieyqKbs/b9hIMcZsdmm7TRBZy5tvbt3d3bZU1FwpGtfsa0nii3jx1y1iWB/XE1sLytwy6J4omIv8w9BKTcDiivjBSMAs8tM3rKQKa6MF5O5vOj6ZYws1+fjweck4DXD2rcrZApIC+ZFV3H1pOMswXH944IVmNsHq2PVQagc1zUSqVy+O4Zl2TbjwZRUTrwEyT8Mj7wdOLZxjSzAe8Oxp7nVWLfNdjyYDZPQujhgQdusU4kIKOQHR3/uD0//KwZeMBb69ffjNo+JINdNasXOTDbgwvb9fyaiHABmWwskaJtzVCPAXXHahMCLenAOAi+YFHN9nhoJFw46HSJgGgG5hsA9JNcI+IJJL9cZOkNZAJxDwDREco2AR0iuEXAPyTUCXjSAOgB4AQHnALA3MIi99GB6YgAdAGCvD4WsB1N25DhkBjcSYt7VgwtdBZj16NUHc6Rv22uTHL63JO8rwazsvROPBb536QkQMs9Owgche10i6utDZrBAa+8/vuBnBJqQGVwjlTaAkCGwB4Y8pwVTTxcyg1tKcBYzdlMNphEUcpNKWvAGFHJdD85C7atOFdJqBIQMgTeQSapNZTV4AZmX+QYb0ENkIeNg6tuG3Jl2Zy+g1AfZ5KbeRG2kNsiszWngmn6QrcHFSKsWgKFrq99RMLJbb1W97mvyU5gEoddWX6JPYSqEuEvprzY/aUvHXaxiKNn8bFGngfK6Yp6fpgK9S5HsjOD5MX7LoMCd8/wYXINsrRrmOdHmBPyWQeFeaI8AUE9ZI5P/m3dFYDucjVRfx+kOxmCsnqQqdiY7XxBb941Y/gvKCHY3uXx88G6d93Npdc5o9GMMhmx9QQU+jhix9UUN159sj0Q6iEJ5wb5Mp/fSLx+DEXd5Om+NwZi7VN5S7TbGH0D6uv3VODh3AlybJfjSCXBpls16C3hrAALXgfckEHAeeDMEmp4uhcCt2YG3QuDK7MB1BiOD3JMPMYORSj6nG2IGl2YFvg28xYc8fvTbjt5bvKBo1GFwazbgNxFwZTaLrrkIuDqTRVceeP8YAn+eAq7MArw+BVydwTKzOPWt+lr64M9TwZX0wesOv5wg8jTwrQgI/DYGXEkb3AyDWY1017e5IA7cShf8IxZcTvVmeaEdAbO90lzffnL7XZ9VaREzGLNXT2OtKLiV3tpn60xwNbWVQNH197my4q7FYKiiPGEtMRgNeSCaEOPB5VQK2W+6/87eqrh5MBhqIovCgBkMjvJFYcDx4LLzeio0Y8BYyENRDTMYDnkkq2EGR9VyO008D2zB1YZLW+cF372tuLyKWY8Fg/7ykkpJAi47c1ehLgCzv/CmuSX9cHbDze2Ig0AKLkO9ixMtBgc3XfSu25rPwdfwQX4daMDVBrrNKd+WgFllsIUU5rRnDdyE9rL5t4HTFZBB/hkkgXHy4lRjIeBqQ1vJ+4EFGCdHv+YQCMAAuXea2wbATBYvNfegc2GYLC2ofVeHDtVkBXXo7pilJUGu/Wcuz3e6YZ3r4rrbE62qNbtc77cDERgPemEc7h3pGV748WHewPgvOFwEHFX5LPTGL740E4DRqOf5QD7XYD6ML0pdTjiqDAXz8YNLK3SsleWrqqMP/wN5duRM7TsOqQAAAABJRU5ErkJggg=="></a></td>
+              {{/if}}
+              <td>{{name}}</td>
+              <td>{{gender}}</td>
+              <td>{{race}}</td>
+              <td>{{place}}</td>
+              <td>{{location}}</td>
+              <td>{{#if hospitalized}}Da{{else}}Ne{{/if}}</td>
+              <td><a href="/edit/{{_id}}" class="btn-floating btn-large waves-effect waves-light"><i class="material-icons left">edit</i></a></td>
+              <td><a href="/delete/{{_id}}" class="btn-floating btn-large  red darken-1 waves-effect waves-light"><i class="material-icons left">not_interested</i></a></td>
+
+          </tr>
+          {{/each}}
+        </tbody>
+      </table>
+</template>
+
+<template name="searchByRace">
+
+<h4 class="text-center center-align">Pretraga</h4>
+
+  <div class="row">
+        <div class="input-field col s1">
+          <a id="dropdown-selector1" class='right-align dropdown-button btn' href='#' data-activates='dropdown1'>FILTER</a>
+        </div>
+  </div>
+
+
+  <ul id='dropdown1' class='dropdown-content'>
+    {{#each races}}
+    <li><a href="/search/{{name}}">{{name}}</a></li>
+    <li class="divider"></li>
+    {{/each}}
+  </ul>
+
+  <table class="striped centered responsive-table">
+        <thead>
+          <tr>
+              <th data-field="image"></th>
+              <th data-field="name">Ime</th>
+              <th data-field="gender">Pol</th>
+              <th data-field="race">Rasa</th>
+              <th data-field="place">Prebivalište</th>
+              <th data-field="location">Lokacija</th>
+              <th data-field="hospitalized">Udomljen</th>
+              <th data-field="edit">Izmena</th>
+              <th data-field="delete">Brisanje</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          {{#each dogs}}
+          <tr>
+              {{#if photo}}
+              <td><a href="/view/{{_id}}"><img class="responsive-img circle thumbnail" src={{photo}}></a></td>
+              {{else}}
+              <td><a href="/view/{{_id}}"><img class="responsive-img circle thumbnail" src="data:image/png;base64,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"></a></td>
+              {{/if}}
+              <td>{{name}}</td>
+              <td>{{gender}}</td>
+              <td>{{race}}</td>
+              <td>{{place}}</td>
+              <td>{{location}}</td>
+              <td>{{#if hospitalized}}Da{{else}}Ne{{/if}}</td>
+              <td><a href="/edit/{{_id}}" class="btn-floating btn-large waves-effect waves-light"><i class="material-icons left">edit</i></a></td>
+              <td><a href="/delete/{{_id}}" class="btn-floating btn-large  red darken-1 waves-effect waves-light"><i class="material-icons left">not_interested</i></a></td>
+
+          </tr>
+          {{/each}}
+        </tbody>
+      </table>
+</template>
+
+<template name="add">
+<div class="row col offset-s4 s4">
+     <h4 class="text-center center-align">Registracija psa</h4>
+    <form class="col offset-s4 s4">
+      <div class="row">
+        <div class="input-field col s12">
+          <input id="name" type="text" class="validate">
+          <label for="name">Ime</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s12">
+          <select id="gender" class="icons">
+            <option value="" disabled selected>Izaberite</option>
+            <option value="muški" data-icon="http://www.accidental.com.au/media/catalog/product/hospital-nursing-signs-male.jpg" class="left circle">Muški</option>
+            <option value="ženski" data-icon="http://www.clker.com/cliparts/Q/9/h/4/M/z/female-icon.svg" class="left circle">Ženski</option>
+          </select>
+          <label>Pol</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s12">
+          <input id="race" type="text" class="validate">
+          <label for="race">Rasa</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s12">
+          <input id="age" type="text" class="validate">
+          <label for="age">Starost</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s12">
+          <input id="place" type="text" class="validate">
+          <label for="place">Prebivalište</label>
+        </div>
+      </div>
+      <div class="row locationContainer" hidden>
+        <div class="input-field col s12">
+          <input id="location" type="text" class="validate">
+          <label for="location">Deo grada</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s12">
+          <textarea id="description" class="materialize-textarea"></textarea>
+          <label for="textarea1">Opis</label>
+        </div>
+      </div>
+      <div class="row center-align">
+      <input type="checkbox" class="filled-in" id="filled-in-box"/>
+      <label for="filled-in-box">Hitno</label>
+      </div>
+
+      <div class="row">
+        <div class="input-field col s12">
+          <input id="image" type="file" class="validate" multiple> <p class="red-text text-center"><strong>NAPOMENA:</strong> Bilo bi dobro da slike koje dodajete budu u horizontalnom formatu, zbog kasnijeg prikaza na stranici</p>
+        </div>
+      </div>
+      <div class="row center-align">
+            <button class="waves-effect waves-light btn btn-block submit">Registruj <i class="material-icons right">send</i></button>
+      </div>
+    </form>
+  </div>
+</template>
+
+<template name="view">
+  {{#if photo}}
+  <div class="parallax-container">
+      <div class="parallax"><img src={{photo}}></div>
+  </div>
+  {{/if}}
+  <div class="row">
+          <div class="col s12">
+            <div class="card blue-grey darken-1">
+              <div class="card-content white-text">
+                <span class="card-title">{{name}}</span>
+                {{#if urgent}}
+                <div class="chip red darken-1 white-text">HITNO<i class="close material-icons">close</i></div>
+                {{/if}}
+                  <p>
+                    <ul>
+                      <li>Rasa: {{race}}</li>
+                      <li>Godina: {{age}}</li>
+                      <li>Prebivalište: {{place}}</li>
+                      {{#if isHomeless place}}
+                      <li>Lokacija: {{location}}</li>
+                      {{/if}}
+                      <li>Datum: {{formatDate createdAt}}</li>
+                      <li>Opis: <br /> {{description}} </li>
+                      {{#if hospitalized}}
+                        <li><div class="card-panel teal lighten-2">Ovaj pas je usvojen.</div></li>
+                      {{else}}
+                        <li><div class="card-panel teal lighten-2">Ovaj pas još uvek nije usvojen</div></li>
+                      {{/if}}
+                    </ul>
+                  </p>
+              </div>
+              <div class="card-action">
+                {{#if currentUser}}
+                  {{#if hospitalized}}
+                    {{#if isAdoptedBy adoptedBy}}
+                      <a id="cancel" class="waves-effect red darken-1 btn-large center-align"><i class="material-icons right">not_interested</i>OTKAŽI</a>     
+                    {{else}}           
+                      <a class="btn-large disabled">USVOJEN</a>
+                    {{/if}}
+                  {{else}}
+                     <a id="adopt" class="waves-effect waves-light btn-large center-align"><i class="material-icons right">done</i>USVOJI</a>
+                  {{/if}}
+                {{else}}
+                  <div class="white-text">Morate biti ulogovani da biste mogli da usvojite ovog psa</div>
+                {{/if}}
+              </div>
+            </div>
+          </div> 
+</div> 
+
+{{#if photos _id}}
+  <div class="carousel">
+      {{#each photos _id}}
+          <a class="carousel-item"><img src={{photo}}></a>
+      {{/each}}
+  </div>
+{{/if}}
+
+
+</template>
+
+<template name="edit">
+<div class="row col offset-s4 s4">
+     <h4 class="text-center center-align">Izmena podataka o psu</h4>
+    <form class="col offset-s4 s4">
+      <div class="row">
+        <div class="input-field col s12">
+          <input id="name" type="text" value={{name}} class="validate">
+          <label for="name">Ime</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s12">
+          <select id="gender" class="icons">
+            {{#if isMale gender}}
+            <option value="" disabled selected>Izaberite</option>
+            <option value="muški" data-icon="http://www.accidental.com.au/media/catalog/product/hospital-nursing-signs-male.jpg" class="left circle" selected>Muški</option>
+            <option value="ženski" data-icon="http://www.clker.com/cliparts/Q/9/h/4/M/z/female-icon.svg" class="left circle">Ženski</option>
+            {{else}}
+            <option value="" disabled selected>Izaberite</option>
+            <option value="muški" data-icon="http://www.accidental.com.au/media/catalog/product/hospital-nursing-signs-male.jpg" class="left circle">Muški</option>
+            <option value="ženski" data-icon="http://www.clker.com/cliparts/Q/9/h/4/M/z/female-icon.svg" class="left circle" selected="">Ženski</option>
+            {{/if}}
+          </select>
+          <label>Pol</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s12">
+          <input id="race" type="text" value={{race}} class="validate">
+          <label for="race">Rasa</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s12">
+          <input id="age" type="text" value={{age}} class="validate">
+          <label for="age">Starost</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s12">
+          <input id="place" type="text" value={{place}} class="validate">
+          <label for="place">Prebivalište</label>
+        </div>
+      </div>
+      <div class="row locationContainer" hidden>
+        <div class="input-field col s12">
+          <input id="location" type="text" value={{location}} class="validate">
+          <label for="location">Deo grada</label>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s12">
+          <textarea id="description" value={{description}} class="materialize-textarea"></textarea>
+          <label for="textarea1">Opis</label>
+        </div>
+      </div>
+      <div class="row center-align">
+      <input type="checkbox" class="filled-in" id="filled-in-box" checked={{isChecked}} />
+      <label for="filled-in-box">Hitno</label>
+      </div>
+
+      <div class="row">
+        <div class="input-field col s12">
+          <input id="image" type="file" class="validate" multiple> <p class="red-text text-center"><strong>NAPOMENA:</strong> Bilo bi dobro da slike koje dodajete budu u horizontalnom formatu, zbog kasnijeg prikaza na stranici</p>
+        </div>
+      </div>
+      <div class="row center-align">
+            <button class="waves-effect waves-light btn btn-block submit">Ažuriraj <i class="material-icons right">send</i></button>
+      </div>
+    </form>
+  </div>
+</template>
+
+<template name="myDogs">
+
+<h4 class="text-center center-align">Moji psi</h4>
+{{#if dogs}}
+
+  <table class="striped centered responsive-table">
+        <thead>
+          <tr>
+              <th data-field="image"></th>
+              <th data-field="name">Ime</th>
+              <th data-field="gender">Pol</th>
+              <th data-field="race">Rasa</th>
+              <th data-field="place">Prebivalište</th>
+              <th data-field="location">Lokacija</th>
+              <th data-field="hospitalized">Udomljen</th>
+              <th data-field="edit">Izmena</th>
+              <th data-field="delete">Brisanje</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          {{#each dogs}}
+          <tr>
+              {{#if photo}}
+              <td><a href="/view/{{_id}}"><img class="responsive-img circle thumbnail" src={{photo}}></a></td>
+              {{else}}
+              <td><a href="/view/{{_id}}"><img class="responsive-img circle thumbnail" src="data:image/png;base64,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"></a></td>
+              {{/if}}
+              <td>{{name}}</td>
+              <td>{{gender}}</td>
+              <td>{{race}}</td>
+              <td>{{place}}</td>
+              <td>{{location}}</td>
+              <td>{{#if hospitalized}}Da{{else}}Ne{{/if}}</td>
+              <td><a href="/edit/{{_id}}" class="btn-floating btn-large waves-effect waves-light"><i class="material-icons left">edit</i></a></td>
+              <td><a href="/delete/{{_id}}" class="btn-floating btn-large  red darken-1 waves-effect waves-light"><i class="material-icons left">not_interested</i></a></td>
+
+          </tr>
+          {{/each}}
+        </tbody>
+      </table>
+{{else}}
+<span class="text-center center-align">Još uvek niste dodali nijednog psa. Dodajte svog prvog psa klikom na <a href="/add" class="btn-floating red"><i class="material-icons">add</i></a></span>
+{{/if}}
+
+</template>
+
+<template name="categories">
+<h4 class="text-center center-align">Kategorije</h4>
+
+  <table class="striped centered responsive-table">
+        <thead>
+          <tr>
+              <th data-field="image"></th>
+              <th data-field="name">Naziv</th>
+              <th data-field="add"></th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+          <td><a href="/search"><img class="responsive-img circle thumbnail" src="http://www.livescience.com/images/i/000/081/574/original/dogs.jpg?interpolation=lanczos-none&downsize=*:600"></a></td>
+          <td>Svi</td>
+          <td></td>
+          </tr>
+          {{#each races}}
+          <tr>
+              {{#if photo}}
+              <td><a href="/search/{{name}}"><img class="responsive-img circle thumbnail" src={{photo}}></a></td>
+              {{else}}
+              <td><a href="/search/{{name}}"><img class="responsive-img circle thumbnail" src="data:image/png;base64,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"></a></td>
+              {{/if}}
+              <td>{{name}}</td>
+              {{#if photo}}
+              <td></td>
+              {{else}}
+              <td><a href="/upload/{{name}}" class="btn-floating blue"><i class="material-icons">attach_file</i></a></td>
+              {{/if}}
+          </tr>
+          {{/each}}
+        </tbody>
+      </table>
+</template>
+
+<template name="upload">
+<h4 class="text-center center-align">Dodaj sliku</h4>
+<div class="row col offset-s4 s4">
+    <form class="col offset-s4 s4">
+      <div class="row">
+        <div class="input-field col s12">
+          <input id="image" type="file" class="validate"> <p class="red-text text-center"><strong>NAPOMENA:</strong> Bilo bi dobro da slike koje dodajete budu u horizontalnom formatu, zbog kasnijeg prikaza na stranici</p>
+        </div>
+      </div>
+      <div class="row center-align">
+            <button class="waves-effect waves-light btn btn-block submit">Dodaj <i class="material-icons right">send</i></button>
+      </div>
+    </form>
+  </div>
+</template>
+
+<template name="adopt">
+  <h4 class="text-center center-align">Čestitamo</h4>
+  <p>Uspešno ste usvojili psa po imenu {{name}}. {{type}}</p>
+
+  <a id="back" class="waves-effect red darken-1 btn-large center-align"><i class="material-icons right">replay</i>NAZAD</a> 
+
+</template>

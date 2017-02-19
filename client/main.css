@@ -1,0 +1,12 @@
+/* CSS declarations go here */
+.thumbnail{
+	width: 120px;
+	max-height: 100px;
+}
+.carousel-slider {
+    height: 400px !important;
+}
+.carousel-item{
+	width: 800px important;
+	height: 400px important;
+}

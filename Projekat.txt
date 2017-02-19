@@ -1,0 +1,651 @@
+Za aplikaciju ce nam trebati sledece kolekcije podataka (entiteti kod relacionih baza):
+-Korisnik (ovo vec postoji u Meteoru po default-u)
+-Pas (ime, rasa, starost, slika/e, prebivaliste) - Velika vecina stvari je ovde opciono. Pas moze i da nema ime ako ga je neko nasao na ulici i ne zna kako se zove. Rasa je obavezna
+zbog pretrage (to ce nam biti glavni kriterijum po kome se pretrazuje). Treba da vidimo da li pas moze imati jednu ili vise slika, i u slucaju da ih ima vise, slika mora da bude posebna
+kolekcija u bazi. Prebivaliste moze biti azil ili neki drugi dom za zivotinje (ako mozes pogledaj sta sve od toga postoji po Nisu i da se sve to ubaci u bazu) ili pas moze da bude lutalica
+(to je takodje vrsta prebivalista). Ukoliko je lutalica treba da postoji dodatno polje u bazi u kome se navodi u kom delu grada se moze naci taj pas (deo grada). Starost je takodje opciona, ako neko ne zna ili ne moze da proceni koliko je pas star.
+-Prebivaliste - treba da ima id (koji se automatski generise), naziv, adresu i eventualno kapacitet. U kolekciji pas ce za prebivaliste da stoji id prebivalista u kome se nalazi
+-Slika - ako postoji vise slika, ovo je poseban entitet. Sadrzi id, lokaciju slike (URL na kome se nalazi ili putanja do slike ako se snima direktno u bazi), i id psa na koji se odnosi
+-Rasa - id i naziv rase. Ovde treba da se ubace sve poznate rase psa.
+
+Gledaj da napunis bazu podacima, u smislu da tabele za rasu i prebivaliste imaju podatke. Napisi naredbe za dodavanje ovih podataka. Ubaci i nekoliko pasa sa slikama, i povezi sa ostalim
+kolekcijama putem id-a kao stranih kljuceva. Nakon toga, napisi select tj. find naredbe za:
+
+Pretragu svih pasa u bazi - Dogs.find().fetch
+Pretragu svih pasa odredjene rase - Dogs.find({race: 'zlatni retriver'}).fetch;
+Pretragu svih pasa u odredjenom prebivalistu - Dogs.find({place: 'azil'}).fetch;
+Pretragu svih pasa odredjene rase koji se nalaze u odredjenom prebivalistu - Dogs.find({race: 'bernardinac', place: 'lutalica'}); (ovo sve treba da budu odvojene find naredbe)
+Pretraga slike na osnovu id-a psa - Images.find({dogID: 1});
+
+Dodavanje psa (ovo mi treba za formu za dodavanje novog psa) - Dogs.insert({name:"Dzeki", ....}); (treba da ima sve atribute u kolekciji pas);
+
+Gledaj da ti imena svih kolekcija i njihovih atributa budu na engleskom, a sami podaci na srpskom (npr. name: 'Milorad')
+
+Slika ako je samo jedna za svakog psa, onda se u kolekciji pas cuva putanja do slike (npr. 'public/uploads/1.jpg'), a ako ih je vise onda se putanja cuva u posebnoj kolekciji za
+slike, u kome jos postoji strani kljuc - id psa za koga se cuva ta slika
+
+To je sve cega mogu trenutno da se setim, ako mi jos nesto padne na pamet javljam ti. Naravno, ako imas bilo kakve sugestije ili nejasnoce, odmah mi javi
+
+db.places.insert({name: 'Prihvatiliste Kovilovo',
+					city: 'Beograd',
+					address: '', 
+					phone: ''})
+db.places.insert({name: 'Prihvatiliste PIK',
+					city: 'Zemun',
+					address: '', 
+					phone: ''})
+db.places.insert({name: 'Prihvatiliste Rakovica'',
+					city: 'Beograd',
+					address: 'Slavka Miljkovica bb', 
+					phone: '011 412 60 58'})
+db.places.insert({name: 'Karantin Ovca',
+					city: 'Beograd',
+					address: 'Ovcanski put 42', 
+					phone: '011 332 22 91'})
+db.places.insert({name: 'Prihvatiliste Padinska Skela',
+					city: 'Beograd',
+					address: '', 
+					phone: ''})
+db.places.insert({name: 'Azil Ogi',
+					city: 'Beograd',
+					address: 'Krupanjska 16', 
+					phone: '011 2667 099'})
+db.places.insert({name: 'Udruzenje Beta',
+					city: 'Kragujevac',
+					address: '', 
+					phone: '060 1807567'})
+db.places.insert({name: 'lutalica'})
+db.places.insert({name: 'nepoznato'})
+
+//RASE PASA
+
+db.races.insert({name: 'buldog'})
+
+db.races.insert({name: 'doberman'})
+
+db.races.insert({name: 'mops'})
+
+db.races.insert({name: 'labrador retriver'})
+
+db.races.insert({name: 'sibirski haski'})
+
+db.races.insert({name: 'bigl'})
+
+db.races.insert({name: 'nemacki ovcar'})
+
+db.races.insert({name: 'rotvajler'})
+
+db.races.insert({name: 'pudla'})
+
+db.races.insert({name: 'pitbul'})
+
+db.races.insert({name: 'civava'})
+
+db.races.insert({name: 'jazavicar'})
+
+db.races.insert({name: 'malteski pas'})
+
+db.races.insert({name: 'jorksirski terijer'})
+
+db.races.insert({name: 'pekinezer'})
+
+db.races.insert({name: 'veliki engleski hrt'})
+
+db.races.insert({name: 'zlatni retriver'})
+
+db.races.insert({name: 'sar pej'})
+
+db.races.insert({name: 'bul-terijer'})
+
+db.races.insert({name: 'pitbul-terijer'})
+
+db.races.insert({name: 'mesanac'})
+
+db.races.insert({name: 'bernardinac'})
+
+//PSI
+
+
+db.dogs.insert({
+				name: "Luna",
+				race: "mesanac",
+				gender: "zensko",
+				place: "lutalica",
+				location: "Nis Crveni pevac",
+				description: "Pronadjena na ulici sama, trazi se novi gazda!",
+				hospitalized: false,
+				createdAt: new Date(),
+				createdBy: "p4ZHfasPMTZfywY96",
+				adoptedBy: null,
+				urgent: true,	
+				})
+				
+db.dogs.insert({		
+				name: "Endi",
+				race: "mesanac",
+				gender: "musko",
+				place: "lutalica",
+				location: "Mladenovac Centar",
+				description: "Endi trazi dom! ",
+				hospitalized: false,
+				createdAt: new Date(),
+				createdBy: "p4ZHfasPMTZfywY96",
+				adoptedBy: null,
+				urgent: true,
+				})
+				
+				
+db.dogs.insert({				
+				name: "Keni",
+				race: "jazavicar",
+				gender: "musko",
+				place: "Prihvatiliste PIK",
+				location: "",
+				description: "Veseo i razdragan",
+				hospitalized: true,
+				createdAt: new Date(),
+				createdBy: "p4ZHfasPMTZfywY96",
+				adoptedBy: "p4ZHfasPMTZfywY96",
+				urgent: false,
+				})
+				
+				
+db.dogs.insert({				
+				name: "Bak",
+				race: "buldog",
+				gender: "musko",
+				place: "Prihvatiliste Rakovica",
+				location: "",
+				description: "Pametan i veseo",
+				hospitalized: true,
+				createdAt: new Date(),
+				createdBy: "p4ZHfasPMTZfywY96",
+				adoptedBy: "p4ZHfasPMTZfywY96",
+				urgent: false,
+			})
+				
+				
+db.dogs.insert({				
+				name: "Dobi",
+				race: "doberman",
+				age: "3",
+				gender: "zensko",
+				place: "Prihvatiliste Rakovica",
+				location: "",
+				description: "Zenka Dobi trazi novi dom!",
+				hospitalized: false,
+				createdAt: new Date(),
+				createdBy: "p4ZHfasPMTZfywY96",
+				adoptedBy: null,
+				urgent: true,
+				})
+				
+				
+				
+db.dogs.insert({				
+				name: "Bekrija",
+				race: "doberman",
+				age: "2",
+				gender: "musko",
+				place: "Prihvatiliste Rakovica",
+				location: "",
+				description: "Razdragan i pametan pas",
+				hospitalized: false,
+				createdAt: new Date(),
+				createdBy: "p4ZHfasPMTZfywY96",
+				adoptedBy: null,
+				urgent: true
+				})
+				
+				
+				
+db.dogs.insert({				
+				name: "Moni",
+				race: "mops",
+				age: "2",
+				gender: "zensko",
+				place: "Beograd",
+				location: "",
+				description: "Pronadjen napusten pas! Hitno potreban dom!",
+				hospitalized: false,
+				createdAt: new Date(),
+				createdBy: "p4ZHfasPMTZfywY96",
+				adoptedBy: null,
+				urgent: true
+				})
+				
+				
+db.dogs.insert({
+				name: "Nimo",
+				race: "mops",
+				gender: "musko",
+				place: "Karantin Ovca",
+				location: "",
+				description: "",
+				hospitalized: false,
+				createdAt: new Date(),
+				createdBy: "p4ZHfasPMTZfywY96",
+				adoptedBy: null,
+				urgent: true
+				})
+				
+				
+				
+db.dogs.insert({
+				name: "Njuskica",
+				race: "labrador retriver",
+				gender: "zensko",
+				place: "Azil Ogi",
+				location: "",
+				description: "Preslatka zenkica trazi dom!",
+				hospitalized: false,
+				createdAt: new Date(),
+				createdBy: "p4ZHfasPMTZfywY96",
+				adoptedBy: null,
+				urgent: true
+				})
+				
+				
+				
+db.dogs.insert({
+				name: "Dzeki",
+				race: "labrador retriver",
+				gender: "musko",
+				age: "1",
+				place: "Azil Ogi",
+				location: "",
+				description: "Dzeki trazi novog vlasnika.",
+				hospitalized: false,
+				createdAt: new Date(),
+				createdBy: "p4ZHfasPMTZfywY96",
+				adoptedBy: null,
+				urgent: true
+				})
+				
+				
+db.dogs.insert({
+				name: "Haciko",
+				race: "sibirski haski",
+				age:"1",
+				gender: "musko",
+				place: "Azil Ogi",
+				location: "",
+				description: "Ovaj prelepi pas trazi novi dom.",
+				hospitalized: false,
+				createdAt: new Date(),
+				createdBy: "p4ZHfasPMTZfywY96",
+				adoptedBy: null,
+				urgent: true
+				})
+				
+				
+db.dogs.insert({
+				name: "Flekica",
+				race: "bigl",
+				age: "1",
+				gender: "zensko",
+				place: "Azil Ogi",
+				location: "",
+				description: "Vesela i cila",
+				hospitalized: true,
+				createdAt: new Date(),
+				createdBy: "p4ZHfasPMTZfywY96",
+				adoptedBy: "p4ZHfasPMTZfywY96",
+				urgent: false
+				})
+				
+				
+				
+db.dogs.insert({
+				name: "Vukica",
+				race: "nemacki ovcar",
+				gender: "zensko",
+				age: "3",
+				place: "Azil Ogi",
+				location: "",
+				description: "Vukica trazi novi krov nad glavom.",
+				hospitalized: false,
+				createdAt: new Date(),
+				createdBy: "p4ZHfasPMTZfywY96",
+				adoptedBy: null,
+				urgent: true
+				})
+				
+				
+db.dogs.insert({
+				name: "Beni",
+				race: "rotvajler",
+				age: "1",
+				gender: "musko",
+				place: "Azil Ogi",
+				location: "",
+				description: "Inteligentan, odan i hrabar pas.",
+				hospitalized: false,
+				createdAt: new Date(),
+				createdBy: "p4ZHfasPMTZfywY96",
+				adoptedBy: null,
+				urgent: true,
+				})
+				
+				
+				
+db.dogs.insert({
+				name: "Pufnica",
+				race: "pudla",
+				gender: "zensko",
+				place: "Azil Ogi",
+				location: "",
+				description: "Razdragana i pametna",
+				hospitalized: true,
+				createdAt: new Date(),
+				createdBy: "p4ZHfasPMTZfywY96",
+				adoptedBy: "p4ZHfasPMTZfywY96",
+				urgent: false,
+				})
+				
+				
+db.dogs.insert({
+				name: "Piti",
+				race: "pitbul",
+				gender: "musko",
+				place: "Udruzenje Beta",
+				location: "",
+				description: "Piti trazi novi dom.",
+				hospitalized: false,
+				createdAt: new Date(),
+				createdBy: "p4ZHfasPMTZfywY96",
+				adoptedBy: null,
+				urgent: true,
+				})
+				
+				
+db.dogs.insert({
+				name: "Pita",
+				race: "pitbul",
+				gender: "zensko",
+				place: "Udruzenje Beta",
+				location: "",
+				description: "Predivan pas.",
+				hospitalized: true,
+				createdAt: new Date(),
+				createdBy: "p4ZHfasPMTZfywY96",
+				adoptedBy: "p4ZHfasPMTZfywY96",
+				urgent: false,
+				})
+				
+				
+db.dogs.insert({
+				name: "Mirena",
+				race: "civava",
+				gender: "zensko",
+				place: "Udruzenje Beta",
+				location: "",
+				description: "Ovaj mali pas trazi svoj dom",
+				hospitalized: false,
+				createdAt: new Date(),
+				createdBy: "p4ZHfasPMTZfywY96",
+				adoptedBy: null,
+				urgent: true,
+				})
+				
+				
+				
+db.dogs.insert({
+				name: "Kerka",
+				race: "civava",
+				gender: "zensko",
+				place: "Udruzenje Beta",
+				location: "",
+				description: "Luckasta i mala",
+				hospitalized: false,
+				createdAt: new Date(),
+				createdBy: "p4ZHfasPMTZfywY96",
+				adoptedBy: null,
+				urgent: true,
+				})
+				
+				
+db.dogs.insert({
+				name: "Mongo",
+				race: "malteski pas",
+				gender: "musko",
+				place: "Prihvatiliste PIK",
+				location: "",
+				description: "Veseo i cio.",
+				hospitalized: true,
+				createdAt: new Date(),
+				createdBy: "p4ZHfasPMTZfywY96",
+				adoptedBy: "p4ZHfasPMTZfywY96",
+				urgent: false,
+				})
+				
+				
+db.dogs.insert({
+				name: "Zuznara",
+				race: "malteski pas",
+				gender: "zensko",
+				place: "Prihvatiliste PIK",
+				location: "",
+				description: "Vesela i cila.",
+				hospitalized: false,
+				createdAt: new Date(),
+				createdBy: "p4ZHfasPMTZfywY96",
+				adoptedBy: null,
+				urgent: true,
+				})
+				
+				
+db.dogs.insert({
+				name: "Teri",
+				race: "jorksirski terijer",
+				gender: "musko",
+				place: "Prihvatiliste Padinska Skela",
+				location: "",
+				description: "Slatki mali Teri trazi dom.",
+				hospitalized: false,
+				createdAt: new Date(),
+				createdBy: "p4ZHfasPMTZfywY96",
+				adoptedBy: null,
+				urgent: true,
+				})
+				
+				
+db.dogs.insert({
+				name: "Lisa",
+				race: "jorksirski terijer",
+				gender: "zensko",
+				place: "lutalica",
+				location: "Nis Bulevar",
+				description: "Pronadjen izgubljen pas ili napusten pas, trazi novi dom.",
+				hospitalized: false,
+				createdAt: new Date(),
+				createdBy: "p4ZHfasPMTZfywY96",
+				adoptedBy: null,
+				urgent: true,
+				})
+				
+db.dogs.insert({
+				name: "Cvrle",
+				race: "pekinezer",
+				gender: "musko",
+				place: "Prihvatiliste Padinska Skela",
+				location: "",
+				description: "Cvrle je slatki pekinezer koji trazi dom.",
+				hospitalized: false,
+				createdAt: new Date(),
+				createdBy: "p4ZHfasPMTZfywY96",
+				adoptedBy: null,
+				urgent: true,
+				})
+				
+				
+db.dogs.insert({
+				name: "Peki",
+				race: "pekinezer",
+				gender: "musko",
+				place: "Prihvatiliste Kovilovo",
+				location: "",
+				description: "Pruzite Pekiju novi dom.",
+				hospitalized: false,
+				createdAt: new Date(),
+				createdBy: "p4ZHfasPMTZfywY96",
+				adoptedBy: null,
+				urgent: true,
+				})
+				
+				
+db.dogs.insert({
+				name: "Kermit",
+				race: "veliki engleski hrt",
+				gender: "musko",
+				place: "Prihvatiliste Kovilovo",
+				location: "",
+				description: "Ovaj veseli hrt trazi novi dom!",
+				hospitalized: false,
+				createdAt: new Date(),
+				createdBy: "p4ZHfasPMTZfywY96",
+				adoptedBy: null,
+				urgent: true,
+				})
+				
+				
+db.dogs.insert({
+				name: "Goldi",
+				race: "zlatni retriver",
+				gender: "musko",
+				place: "lutalica",
+				location: "Nis Centar",
+				description: "Pronadjen napusten pas.",
+				hospitalized: false,
+				createdAt: new Date(),
+				createdBy: "p4ZHfasPMTZfywY96",
+				adoptedBy: null,
+				urgent: true,
+				})
+				
+				
+				
+db.dogs.insert({
+				name: "Rastko",
+				race: "zlatni retriver",
+				gender: "musko",
+				place: "Karantin Ovca",
+				location: "",
+				description: "Dobar i veran pas.",
+				hospitalized: true,
+				createdAt: new Date(),
+				createdBy: "p4ZHfasPMTZfywY96",
+				adoptedBy: "p4ZHfasPMTZfywY96",
+				urgent: false,
+				})
+				
+db.dogs.insert({				
+				name: "Cuftica",
+				race: "sar pej",
+				gender: "musko",
+				place: "Prihvatiliste Rakovica",
+				location: "",
+				description: "",
+				hospitalized: false,
+				createdAt: new Date(),
+				createdBy: "p4ZHfasPMTZfywY96",
+				adoptedBy: null,
+				urgent: true,
+				},
+				
+				
+				{
+				name: "Sarenko",
+				race: "bul-terijer",
+				gender: "musko",
+				place: "Prihvatiliste Rakovica",
+				location: "",
+				description: "Zivahan i mio",
+				hospitalized: true,
+				createdAt: new Date(),
+				createdBy: "p4ZHfasPMTZfywY96",
+				adoptedBy: "p4ZHfasPMTZfywY96",
+				urgent: false,
+				},
+				
+				
+				{
+				name: "Lusi",
+				race: "pitbul-terijer",
+				gender: "zensko",
+				place: "Prihvatiliste PIK",
+				location: "",
+				description: "Vesela i draga",
+				hospitalized: false,
+				createdAt: new Date(),
+				createdBy: "p4ZHfasPMTZfywY96",
+				adoptedBy: null,
+				urgent: true,
+				},
+				
+				
+				{
+				name: "Linda",
+				race: "pitbul-terijer",
+				gender: "zensko",
+				place: "Karantin Ovca",
+				location: "",
+				description: "Linda trazi novi dom.",
+				hospitalized: false,
+				createdAt: new Date(),
+				createdBy: "p4ZHfasPMTZfywY96",
+				adoptedBy: null,
+				urgent: true,
+				},
+				
+				
+				
+				
+				
+				{
+				name: "Svrca",
+				race: "mesanac",
+				gender: "musko",
+				place: "Karantin Ovca",
+				location: "",
+				description: "Svrca trazi dom.",
+				hospitalized: false,
+				createdAt: new Date(),
+				createdBy: "p4ZHfasPMTZfywY96",
+				adoptedBy: null,
+				urgent: true,
+				},
+				
+				{
+				name: "Aja",
+				race: "mesanac",
+				gender: "zensko",
+				place: "Udruzenje Beta",
+				location: "",
+				description: "Umiljata Aja trazi dom",
+				hospitalized: false,
+				createdAt: new Date(),
+				createdBy: "p4ZHfasPMTZfywY96",
+				adoptedBy: null,
+				urgent: true,
+				},
+				
+				
+				{
+				name: "Mona",
+				race: "mesanac",
+				gender: "zensko",
+				place: "Prihvatiliste Padinska Skela",
+				location: "",
+				description: "Moni trazi topli dom.",
+				hospitalized: false,
+				createdAt: new Date(),
+				createdBy: "p4ZHfasPMTZfywY96",
+				adoptedBy: null,
+				urgent: true,
+				}
+				
+				])
+
+
+
