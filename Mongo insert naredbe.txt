@@ -1,30 +1,4 @@
-Za aplikaciju ce nam trebati sledece kolekcije podataka (entiteti kod relacionih baza):
--Korisnik (ovo vec postoji u Meteoru po default-u)
--Pas (ime, rasa, starost, slika/e, prebivaliste) - Velika vecina stvari je ovde opciono. Pas moze i da nema ime ako ga je neko nasao na ulici i ne zna kako se zove. Rasa je obavezna
-zbog pretrage (to ce nam biti glavni kriterijum po kome se pretrazuje). Treba da vidimo da li pas moze imati jednu ili vise slika, i u slucaju da ih ima vise, slika mora da bude posebna
-kolekcija u bazi. Prebivaliste moze biti azil ili neki drugi dom za zivotinje (ako mozes pogledaj sta sve od toga postoji po Nisu i da se sve to ubaci u bazu) ili pas moze da bude lutalica
-(to je takodje vrsta prebivalista). Ukoliko je lutalica treba da postoji dodatno polje u bazi u kome se navodi u kom delu grada se moze naci taj pas (deo grada). Starost je takodje opciona, ako neko ne zna ili ne moze da proceni koliko je pas star.
--Prebivaliste - treba da ima id (koji se automatski generise), naziv, adresu i eventualno kapacitet. U kolekciji pas ce za prebivaliste da stoji id prebivalista u kome se nalazi
--Slika - ako postoji vise slika, ovo je poseban entitet. Sadrzi id, lokaciju slike (URL na kome se nalazi ili putanja do slike ako se snima direktno u bazi), i id psa na koji se odnosi
--Rasa - id i naziv rase. Ovde treba da se ubace sve poznate rase psa.
-
-Gledaj da napunis bazu podacima, u smislu da tabele za rasu i prebivaliste imaju podatke. Napisi naredbe za dodavanje ovih podataka. Ubaci i nekoliko pasa sa slikama, i povezi sa ostalim
-kolekcijama putem id-a kao stranih kljuceva. Nakon toga, napisi select tj. find naredbe za:
-
-Pretragu svih pasa u bazi - Dogs.find().fetch
-Pretragu svih pasa odredjene rase - Dogs.find({race: 'zlatni retriver'}).fetch;
-Pretragu svih pasa u odredjenom prebivalistu - Dogs.find({place: 'azil'}).fetch;
-Pretragu svih pasa odredjene rase koji se nalaze u odredjenom prebivalistu - Dogs.find({race: 'bernardinac', place: 'lutalica'}); (ovo sve treba da budu odvojene find naredbe)
-Pretraga slike na osnovu id-a psa - Images.find({dogID: 1});
-
-Dodavanje psa (ovo mi treba za formu za dodavanje novog psa) - Dogs.insert({name:"Dzeki", ....}); (treba da ima sve atribute u kolekciji pas);
-
-Gledaj da ti imena svih kolekcija i njihovih atributa budu na engleskom, a sami podaci na srpskom (npr. name: 'Milorad')
-
-Slika ako je samo jedna za svakog psa, onda se u kolekciji pas cuva putanja do slike (npr. 'public/uploads/1.jpg'), a ako ih je vise onda se putanja cuva u posebnoj kolekciji za
-slike, u kome jos postoji strani kljuc - id psa za koga se cuva ta slika
-
-To je sve cega mogu trenutno da se setim, ako mi jos nesto padne na pamet javljam ti. Naravno, ako imas bilo kakve sugestije ili nejasnoce, odmah mi javi
+//PREBIVALISTA
 
 db.places.insert({name: 'Prihvatiliste Kovilovo',
 					city: 'Beograd',
@@ -59,57 +33,60 @@ db.places.insert({name: 'nepoznato'})
 
 //RASE PASA
 
-db.races.insert({name: 'buldog'})
+db.races.insert({name: 'buldog',
+photo: "http://saznajlako.com/wp-content/uploads/2014/04/engleski-buldog-karakteristike.jpg" })
 
-db.races.insert({name: 'doberman'})
+db.races.insert({name: 'doberman', photo: "http://s3.amazonaws.com/assets.prod.vetstreet.com/b6/b443109e8911e0a2380050568d634f/file/Doberman-1-645mk062111.jpg"})
 
-db.races.insert({name: 'mops'})
+db.races.insert({name: 'mops', photo: "http://vignette1.wikia.nocookie.net/momio-polska/images/3/3f/Mops.jpg/revision/latest?cb=20151204124031"})
 
-db.races.insert({name: 'labrador retriver'})
+db.races.insert({name: 'labrador retriver', photo: "http://cdn2-www.dogtime.com/assets/uploads/gallery/labrador-retriever-dog-breed-pictures/labrador-retriever-dog-pictures-6.jpg"})
 
-db.races.insert({name: 'sibirski haski'})
+db.races.insert({name: 'sibirski haski', photo: "http://siberianhusky.50webs.com/fondos/lobo1280x1024.jpg"})
 
-db.races.insert({name: 'bigl'})
+db.races.insert({name: 'bigl', photo: "http://mreza.petface.net/wp-content/uploads/2014/01/petopedija-bigl-3.jpg"})
 
-db.races.insert({name: 'nemacki ovcar'})
+db.races.insert({name: 'nemacki ovcar', photo: "https://nemackiovcarimarkovicweb.files.wordpress.com/2016/08/nemacki_ovcar_najbolji_ljubimac_avgust_2016.jpg?w=705&h=435&crop=1"})
 
-db.races.insert({name: 'rotvajler'})
+db.races.insert({name: 'rotvajler', photo: "http://www.b92.net/news/pics/2013/09/25/16691032165242c8c3c0197570855526_w640.jpg"})
 
-db.races.insert({name: 'pudla'})
+db.races.insert({name: 'pudla', photo: "http://petnovisad.com/wp-content/uploads/2012/12/pudla.jpg"})
 
-db.races.insert({name: 'pitbul'})
+db.races.insert({name: 'pitbul', photo: "https://s-media-cache-ak0.pinimg.com/736x/1f/15/f3/1f15f34285036bfa364fc89640a020f2.jpg"})
 
-db.races.insert({name: 'civava'})
+db.races.insert({name: 'civava', photo: "http://ocdn.eu/pulscms-transforms/1/mThktkpTURBXy80NGFmMzg0N2RjODBhOWQyMTZhNmNlOGU5NjRhZTVmOC5qcGeSlQLNAxQAwsOVAs0B1gDCww"})
 
-db.races.insert({name: 'jazavicar'})
+db.races.insert({name: 'jazavicar', photo: "http://www.zivotinje.rs/slike/itemImg/1385110724icar.jpg"})
 
-db.races.insert({name: 'malteski pas'})
+db.races.insert({name: 'malteski pas', photo: "https://www.prodajapasa.com/upload/server/php/files/2190/661824627/thumbnail/Carli.jpg"})
 
-db.races.insert({name: 'jorksirski terijer'})
+db.races.insert({name: 'jorksirski terijer', photo: "http://www.zivotinje.rs/upload/vesti/textImages/joksirski-terijer2.jpg"})
 
-db.races.insert({name: 'pekinezer'})
+db.races.insert({name: 'pekinezer', photo: "http://njuska.com/wp-content/uploads/2014/12/pekinezer-2.jpg"})
 
-db.races.insert({name: 'veliki engleski hrt'})
+db.races.insert({name: 'veliki engleski hrt', photo: "http://www.zivotinje.rs/slike/itemImg/1392119114i-engleski-hrt.jpg"})
 
-db.races.insert({name: 'zlatni retriver'})
+db.races.insert({name: 'zlatni retriver', photo: "http://opusteno.rs/slike/2012/03/moj-ljubimac-14046/zlatni-ritriver-9.jpg"})
 
-db.races.insert({name: 'sar pej'})
+db.races.insert({name: 'sar pej', photo: "http://www.zivotinje.rs/slike/itemImg/1385114541ej.jpg"})
 
-db.races.insert({name: 'bul-terijer'})
+db.races.insert({name: 'bul-terijer', photo: "http://www.srecica.com/wp-content/uploads/2010/01/Engleski-bull_terrier.jpg"})
 
-db.races.insert({name: 'pitbul-terijer'})
+db.races.insert({name: 'pitbul-terijer', photo: "https://s-media-cache-ak0.pinimg.com/736x/4d/2d/4f/4d2d4febf940f927c9a261c436ac1162.jpg"})
 
-db.races.insert({name: 'mesanac'})
+db.races.insert({name: 'mesanac', photo: "http://petmagazine.rs/wp-content/uploads/2016/10/mesanac.jpg"})
 
-db.races.insert({name: 'bernardinac'})
+db.races.insert({name: 'bernardinac', photo: "https://pseci.net/wp-content/uploads/2014/03/bernardinac.jpeg"})
 
 //PSI
 
 
 db.dogs.insert({
+				_id: "dfgsste23",
 				name: "Luna",
 				race: "mesanac",
 				gender: "zensko",
+				age: "1",
 				place: "lutalica",
 				location: "Nis Crveni pevac",
 				description: "Pronadjena na ulici sama, trazi se novi gazda!",
@@ -117,11 +94,14 @@ db.dogs.insert({
 				createdAt: new Date(),
 				createdBy: "p4ZHfasPMTZfywY96",
 				adoptedBy: null,
-				urgent: true,	
+				urgent: true,
+				photo: "http://www.zivotinje.rs/timthumb.php?src=http://www.zivotinje.rs/slike/oglasi/1433165366527_120743.jpg&w=600&"
 				})
 				
-db.dogs.insert({		
+db.dogs.insert({	
+				_id: "mamasmjst27",
 				name: "Endi",
+				age: "1",
 				race: "mesanac",
 				gender: "musko",
 				place: "lutalica",
@@ -132,10 +112,30 @@ db.dogs.insert({
 				createdBy: "p4ZHfasPMTZfywY96",
 				adoptedBy: null,
 				urgent: true,
+				photo: "http://i48.tinypic.com/2nuksxh.jpg"
 				})
 				
 				
-db.dogs.insert({				
+				db.dogs.insert({	
+				_id: "mamddassmjwwwst27",
+				name: "Luckasta",
+				age: "1",
+				race: "jazavicar",
+				gender: "musko",
+				place: "Karantin Ovca",
+				location: "",
+				description: "Endi trazi dom! ",
+				hospitalized: false,
+				createdAt: new Date(),
+				createdBy: "p4ZHfasPMTZfywY96",
+				adoptedBy: null,
+				urgent: true,
+				photo:"http://www.klikdooglasa.com/private/slike_ostale/29-01-2015-23-10-54-nada_3.jpg"
+				})
+				
+				
+				
+				db.dogs.insert({ _id: "gaddysfyDDtws65",
 				name: "Keni",
 				race: "jazavicar",
 				gender: "musko",
@@ -145,30 +145,34 @@ db.dogs.insert({
 				hospitalized: true,
 				createdAt: new Date(),
 				createdBy: "p4ZHfasPMTZfywY96",
-				adoptedBy: "p4ZHfasPMTZfywY96",
+				adoptedBy: null,
 				urgent: false,
+				photo:"http://i867.photobucket.com/albums/ab231/cokili/100_0671.jpg"
 				})
 				
 				
-db.dogs.insert({				
+db.dogs.insert({
+				_id: "hshsddssft6m",
 				name: "Bak",
 				race: "buldog",
 				gender: "musko",
+				age: "2",
 				place: "Prihvatiliste Rakovica",
 				location: "",
 				description: "Pametan i veseo",
 				hospitalized: true,
 				createdAt: new Date(),
 				createdBy: "p4ZHfasPMTZfywY96",
-				adoptedBy: "p4ZHfasPMTZfywY96",
+				adoptedBy: null,
 				urgent: false,
+				photo: "https://i.ytimg.com/vi/mdKDvEd6sfM/maxresdefault.jpg"
 			})
 				
 				
-db.dogs.insert({				
+db.dogs.insert({_id: "hsDShsfddt6m",				
 				name: "Dobi",
 				race: "doberman",
-				age: "3",
+				age: "2",
 				gender: "zensko",
 				place: "Prihvatiliste Rakovica",
 				location: "",
@@ -178,14 +182,15 @@ db.dogs.insert({
 				createdBy: "p4ZHfasPMTZfywY96",
 				adoptedBy: null,
 				urgent: true,
+				photo: "http://s3.amazonaws.com/assets.prod.vetstreet.com/5e/7e/5bab5ea442c0a153df88e4062a1f/doberman-pinscher-ap-0uoxil-645-x-380.jpg"
 				})
 				
 				
 				
-db.dogs.insert({				
+db.dogs.insert({ _id: "hshsSSsAft6m",				
 				name: "Bekrija",
 				race: "doberman",
-				age: "2",
+				age: "3",
 				gender: "musko",
 				place: "Prihvatiliste Rakovica",
 				location: "",
@@ -194,12 +199,14 @@ db.dogs.insert({
 				createdAt: new Date(),
 				createdBy: "p4ZHfasPMTZfywY96",
 				adoptedBy: null,
-				urgent: true
+				urgent: true,
+				photo: "https://4.bp.blogspot.com/-K5e7hanJHaE/V3M3myWEJ9I/AAAAAAAAGNs/r9KzbxPNeD8AA3_vh8T4U7Wd7RB2BHqXwCLcB/s1600/Doberman-Pinscher-lying-on-the-grass.jpg"
 				})
 				
 				
 				
-db.dogs.insert({				
+db.dogs.insert({	
+				_id: "hsSSsAhsft6m",
 				name: "Moni",
 				race: "mops",
 				age: "2",
@@ -211,11 +218,13 @@ db.dogs.insert({
 				createdAt: new Date(),
 				createdBy: "p4ZHfasPMTZfywY96",
 				adoptedBy: null,
-				urgent: true
+				urgent: true,
+				photo: "http://www.chovzvirat.cz/images/zvirata/mops_eqc44ed.jpg"
 				})
 				
 				
 db.dogs.insert({
+				_id: "hsSWdddDWDm",
 				name: "Nimo",
 				race: "mops",
 				gender: "musko",
@@ -226,12 +235,14 @@ db.dogs.insert({
 				createdAt: new Date(),
 				createdBy: "p4ZHfasPMTZfywY96",
 				adoptedBy: null,
-				urgent: true
+				urgent: true,
+				photo: "http://petnovisad.com/wp-content/uploads/2012/12/mops.jpg"
 				})
 				
 				
 				
 db.dogs.insert({
+				_id: "hsSSAhDDDDsft6m",
 				name: "Njuskica",
 				race: "labrador retriver",
 				gender: "zensko",
@@ -242,12 +253,14 @@ db.dogs.insert({
 				createdAt: new Date(),
 				createdBy: "p4ZHfasPMTZfywY96",
 				adoptedBy: null,
-				urgent: true
+				urgent: true,
+				photo: "http://wallup.net/wp-content/uploads/2016/01/140862-street-animals-wet-dog-Labrador_Retriever-748x421.jpg"
 				})
 				
 				
 				
 db.dogs.insert({
+_id: "hsSDsft6m",
 				name: "Dzeki",
 				race: "labrador retriver",
 				gender: "musko",
@@ -259,11 +272,12 @@ db.dogs.insert({
 				createdAt: new Date(),
 				createdBy: "p4ZHfasPMTZfywY96",
 				adoptedBy: null,
-				urgent: true
+				urgent: true,
+				photo: "http://chineseportal.net/Media/Default/Articles/14-14.jpg"
 				})
 				
 				
-db.dogs.insert({
+db.dogs.insert({ _id: "hsSdssDsfat6m",
 				name: "Haciko",
 				race: "sibirski haski",
 				age:"1",
@@ -275,11 +289,12 @@ db.dogs.insert({
 				createdAt: new Date(),
 				createdBy: "p4ZHfasPMTZfywY96",
 				adoptedBy: null,
-				urgent: true
+				urgent: true,
+				photo: "https://sibirskihaski.files.wordpress.com/2012/05/animals-dogs-siberian-husky-cute-600x3752.jpg"
 				})
 				
 				
-db.dogs.insert({
+db.dogs.insert({_id: "hsSDsft644m",
 				name: "Flekica",
 				race: "bigl",
 				age: "1",
@@ -291,12 +306,13 @@ db.dogs.insert({
 				createdAt: new Date(),
 				createdBy: "p4ZHfasPMTZfywY96",
 				adoptedBy: "p4ZHfasPMTZfywY96",
-				urgent: false
+				urgent: false,
+				phone: "http://www.oglasicg.me/private/slike_ostale/17-07-2014-12-44-20-2.jpg"
 				})
 				
 				
 				
-db.dogs.insert({
+db.dogs.insert({_id: "hsSDsft622222m",
 				name: "Vukica",
 				race: "nemacki ovcar",
 				gender: "zensko",
@@ -308,11 +324,12 @@ db.dogs.insert({
 				createdAt: new Date(),
 				createdBy: "p4ZHfasPMTZfywY96",
 				adoptedBy: null,
-				urgent: true
+				urgent: true,
+				photo: "https://www.prodajapasa.com/upload/server/php/files/22793/515097084/1.jpg"
 				})
 				
 				
-db.dogs.insert({
+db.dogs.insert({ _id: "hsSDsft6rjfjofium",
 				name: "Beni",
 				race: "rotvajler",
 				age: "1",
@@ -325,11 +342,12 @@ db.dogs.insert({
 				createdBy: "p4ZHfasPMTZfywY96",
 				adoptedBy: null,
 				urgent: true,
+				photo: "http://img4.ceskatelevize.cz/program/porady/1095970013/foto/rotvajler19.jpg?w=240"
 				})
 				
 				
 				
-db.dogs.insert({
+db.dogs.insert({ _id: "hsSDs22222ft6m",
 				name: "Pufnica",
 				race: "pudla",
 				gender: "zensko",
@@ -341,10 +359,11 @@ db.dogs.insert({
 				createdBy: "p4ZHfasPMTZfywY96",
 				adoptedBy: "p4ZHfasPMTZfywY96",
 				urgent: false,
+				photo: "https://i.ytimg.com/vi/KKI7jU5yZc0/maxresdefault.jpg"
 				})
 				
 				
-db.dogs.insert({
+db.dogs.insert({ _id: "hsSdDs444ft6m",
 				name: "Piti",
 				race: "pitbul",
 				gender: "musko",
@@ -356,10 +375,11 @@ db.dogs.insert({
 				createdBy: "p4ZHfasPMTZfywY96",
 				adoptedBy: null,
 				urgent: true,
+				photo: "https://www.cesarsway.com/sites/newcesarsway/files/styles/large_article_preview/public/The-most-dangerous-dog_0.jpg?itok=5g3K3HxR"
 				})
 				
 				
-db.dogs.insert({
+db.dogs.insert({ _id: "hsSDsfteeee6m",
 				name: "Pita",
 				race: "pitbul",
 				gender: "zensko",
@@ -371,10 +391,11 @@ db.dogs.insert({
 				createdBy: "p4ZHfasPMTZfywY96",
 				adoptedBy: "p4ZHfasPMTZfywY96",
 				urgent: false,
+				photo: "http://www.dogbreedinfo.com/images26/PitbullTerrierAmericanBlueNoseBrindleWatchdogRazorEdgeLinesBlueEyesSpencerPuppy3MonthsOld.jpg"
 				})
 				
 				
-db.dogs.insert({
+db.dogs.insert({ _id: "cvbxmshd",
 				name: "Mirena",
 				race: "civava",
 				gender: "zensko",
@@ -386,11 +407,12 @@ db.dogs.insert({
 				createdBy: "p4ZHfasPMTZfywY96",
 				adoptedBy: null,
 				urgent: true,
+				photo: "http://ocdn.eu/pulscms-transforms/1/mThktkpTURBXy80NGFmMzg0N2RjODBhOWQyMTZhNmNlOGU5NjRhZTVmOC5qcGeSlQLNAxQAwsOVAs0B1gDCww"
 				})
 				
 				
 				
-db.dogs.insert({
+db.dogs.insert({ _id: "cdddvbxmshd",
 				name: "Kerka",
 				race: "civava",
 				gender: "zensko",
@@ -402,10 +424,11 @@ db.dogs.insert({
 				createdBy: "p4ZHfasPMTZfywY96",
 				adoptedBy: null,
 				urgent: true,
+				photo: "http://saznajlako.com/wp-content/uploads/2014/04/civava-kratka-dlaka.jpg"
 				})
 				
 				
-db.dogs.insert({
+db.dogs.insert({ _id: "cvsbdddddxmshd",
 				name: "Mongo",
 				race: "malteski pas",
 				gender: "musko",
@@ -417,10 +440,11 @@ db.dogs.insert({
 				createdBy: "p4ZHfasPMTZfywY96",
 				adoptedBy: "p4ZHfasPMTZfywY96",
 				urgent: false,
+				photo: "https://njuskica.files.wordpress.com/2013/07/110514_33541_cerco-maltese-toy-in-regalo.jpg"
 				})
 				
 				
-db.dogs.insert({
+db.dogs.insert({ _id: "cvb224xms5hd",
 				name: "Zuznara",
 				race: "malteski pas",
 				gender: "zensko",
@@ -432,10 +456,11 @@ db.dogs.insert({
 				createdBy: "p4ZHfasPMTZfywY96",
 				adoptedBy: null,
 				urgent: true,
+				photo: "http://stuffpoint.com/dogs/image/184484-dogs-malteki-pas.jpg"
 				})
 				
 				
-db.dogs.insert({
+db.dogs.insert({ _id: "cv4444bxmsh2d",
 				name: "Teri",
 				race: "jorksirski terijer",
 				gender: "musko",
@@ -447,10 +472,11 @@ db.dogs.insert({
 				createdBy: "p4ZHfasPMTZfywY96",
 				adoptedBy: null,
 				urgent: true,
+				photo: "http://saznajlako.com/wp-content/uploads/2014/04/jorksirski-terijer2.jpg"
 				})
 				
 				
-db.dogs.insert({
+db.dogs.insert({ _id: "cghynyjshd",
 				name: "Lisa",
 				race: "jorksirski terijer",
 				gender: "zensko",
@@ -462,9 +488,10 @@ db.dogs.insert({
 				createdBy: "p4ZHfasPMTZfywY96",
 				adoptedBy: null,
 				urgent: true,
+				photo: "http://my-doggy.rs/media/upload/dog/339881/img_5172a.jpg"
 				})
 				
-db.dogs.insert({
+db.dogs.insert({ _id: "cveeeebrxmshd",
 				name: "Cvrle",
 				race: "pekinezer",
 				gender: "musko",
@@ -476,10 +503,11 @@ db.dogs.insert({
 				createdBy: "p4ZHfasPMTZfywY96",
 				adoptedBy: null,
 				urgent: true,
+				photo: "http://www.njuz.net/wp-content/uploads/2012/12/pekinezer-604x430.jpg"
 				})
 				
 				
-db.dogs.insert({
+db.dogs.insert({ _id: "ccdddddmshd",
 				name: "Peki",
 				race: "pekinezer",
 				gender: "musko",
@@ -491,10 +519,11 @@ db.dogs.insert({
 				createdBy: "p4ZHfasPMTZfywY96",
 				adoptedBy: null,
 				urgent: true,
+				photo: "http://static.rs.n1info.com/Picture/64912/jpeg/pekinezer"
 				})
 				
 				
-db.dogs.insert({
+db.dogs.insert({ _id: "chythb54ff3d",
 				name: "Kermit",
 				race: "veliki engleski hrt",
 				gender: "musko",
@@ -506,10 +535,11 @@ db.dogs.insert({
 				createdBy: "p4ZHfasPMTZfywY96",
 				adoptedBy: null,
 				urgent: true,
+				photo: "http://ljubiteljipasa.com/wp-content/uploads/2016/03/Engleski-hrt-5.jpg"
 				})
 				
 				
-db.dogs.insert({
+db.dogs.insert({ _id: "rrerfevtrrr3d",
 				name: "Goldi",
 				race: "zlatni retriver",
 				gender: "musko",
@@ -521,11 +551,12 @@ db.dogs.insert({
 				createdBy: "p4ZHfasPMTZfywY96",
 				adoptedBy: null,
 				urgent: true,
+				photo: "https://i.ytimg.com/vi/2lizl2vqGYI/hqdefault.jpg"
 				})
 				
 				
 				
-db.dogs.insert({
+db.dogs.insert({ _id: "eecwr4435vf",
 				name: "Rastko",
 				race: "zlatni retriver",
 				gender: "musko",
@@ -537,9 +568,10 @@ db.dogs.insert({
 				createdBy: "p4ZHfasPMTZfywY96",
 				adoptedBy: "p4ZHfasPMTZfywY96",
 				urgent: false,
+				photo: "http://saznajlako.com/wp-content/uploads/2014/04/Zlatni-retriver-6.jpg"
 				})
 				
-db.dogs.insert({				
+db.dogs.insert({ _id: "rerererd",				
 				name: "Cuftica",
 				race: "sar pej",
 				gender: "musko",
@@ -551,10 +583,11 @@ db.dogs.insert({
 				createdBy: "p4ZHfasPMTZfywY96",
 				adoptedBy: null,
 				urgent: true,
-				},
+				photo: "https://s-media-cache-ak0.pinimg.com/originals/1b/c9/b5/1bc9b58ecbaa90f749536a3ed76d6137.jpg"
+				})
 				
 				
-				{
+db.dogs.insert({ _id: "323242ffedcd",
 				name: "Sarenko",
 				race: "bul-terijer",
 				gender: "musko",
@@ -566,10 +599,11 @@ db.dogs.insert({
 				createdBy: "p4ZHfasPMTZfywY96",
 				adoptedBy: "p4ZHfasPMTZfywY96",
 				urgent: false,
-				},
+				photo: "https://www.srbijadanas.com/sites/default/files/a/t/2015/01/26/bul-terijer-pas.jpg"
+				})
 				
 				
-				{
+db.dogs.insert({ _id: "edededed",
 				name: "Lusi",
 				race: "pitbul-terijer",
 				gender: "zensko",
@@ -581,10 +615,11 @@ db.dogs.insert({
 				createdBy: "p4ZHfasPMTZfywY96",
 				adoptedBy: null,
 				urgent: true,
-				},
+				photo: "http://animalsbreeds.com/wp-content/uploads/2014/12/American-Pit-Bull-Terrier-2.jpg"
+				})
 				
 				
-				{
+db.dogs.insert({ _id: "eeeeeecdwsw33d",
 				name: "Linda",
 				race: "pitbul-terijer",
 				gender: "zensko",
@@ -596,13 +631,14 @@ db.dogs.insert({
 				createdBy: "p4ZHfasPMTZfywY96",
 				adoptedBy: null,
 				urgent: true,
-				},
+				photo: "http://americanbullydaily.com/wp-content/uploads/2016/01/AMERICAN-STAFFORDSHIRE-TERRIER-Pit-bull-breeds-adult.jpg"
+				})
 				
 				
 				
 				
 				
-				{
+db.dogs.insert({ _id: "ewdefwewgshd",
 				name: "Svrca",
 				race: "mesanac",
 				gender: "musko",
@@ -614,9 +650,10 @@ db.dogs.insert({
 				createdBy: "p4ZHfasPMTZfywY96",
 				adoptedBy: null,
 				urgent: true,
-				},
+				photo: "https://www.srbijadanas.com/sites/default/files/126/profimedia-0217299270.jpg"
+				})
 				
-				{
+db.dogs.insert({ _id: "cewecccchd",
 				name: "Aja",
 				race: "mesanac",
 				gender: "zensko",
@@ -628,10 +665,11 @@ db.dogs.insert({
 				createdBy: "p4ZHfasPMTZfywY96",
 				adoptedBy: null,
 				urgent: true,
-				},
+				photo: "http://www.kuceimace.com/files/udomljavanje/DSC03067.JPG"
+				})
 				
 				
-				{
+db.dogs.insert({ _id: "cveewweewewewd",
 				name: "Mona",
 				race: "mesanac",
 				gender: "zensko",
@@ -643,9 +681,21 @@ db.dogs.insert({
 				createdBy: "p4ZHfasPMTZfywY96",
 				adoptedBy: null,
 				urgent: true,
-				}
-				
-				])
+				photo: "https://static.kupindoslike.com/Zenka-mesanac-patuljaste-pudle-i-bisona_slika_O_23339385.jpg"
+				})
 
 
-
+db.dogs.insert({ _id: "cveewaaaaaaaweewewewd",
+				name: "Smoki",
+				race: "bernandinac",
+				gender: "zensko",
+				place: "Prihvatiliste Padinska Skela",
+				location: "",
+				description: "Smoki trazi novi dom.",
+				hospitalized: false,
+				createdAt: new Date(),
+				createdBy: "p4ZHfasPMTZfywY96",
+				adoptedBy: null,
+				urgent: true,
+				photo: "http://www.etrafika.net/slike/2015/02/bernardinac-klub-bl1-702x336.jpg"
+				})

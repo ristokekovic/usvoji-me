@@ -1,0 +1,8 @@
+Za uspesno pokretanje i testiranje aplikacije, potrebno je uraditi sledece korake:
+1) Skinuti Meteor framework sa sajta https://www.meteor.com
+2) Projekat se moze raspakovati bilo gde na sistemu, samo treba uci u taj folder i otvoriti komandnu liniju preko cmd-a
+3) Pre pokretanja projekta treba instalirati babel-runtime komandom "meteor npm install --save babel-runtime "(ovo je neophodno jer server nece hteti da se pokrene bez toga)
+4) Server se pokrece komandom "meteor", i nakon sto se on podigne aplikaciji je moguce pristupiti iz browsera na adresi localhost:3000
+5) Potrebno je inicijalizovati bazu tako sto se u drugom cmd prozoru komandom "meteor mongo" otvara Mongo CLI
+6) Ovde treba uneti sve insert naredbe iz tekstualnog fajla koji se takodje nalazi u ovom projektu
+7) Nakon unosenja ovih podataka u bazu, moguce je istestirati sve funkcionalnosti aplikacije
